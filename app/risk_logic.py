@@ -16,8 +16,11 @@ def check_text_risk(description: str) -> List[str]:
     return found
 
 def score_client(info: ClientInfo) -> dict:
+    external_description = fetch_company_data_from_opencorporates(info.name)
+    full_description = f"{info.description}. {external_description}"
+
     industry_risk = check_industry_risk(info.industry)
-    keyword_hits = check_text_risk(info.description)
+    keyword_hits = check_text_risk(full_description)
 
     score = 0
     if industry_risk:
@@ -36,6 +39,7 @@ def score_client(info: ClientInfo) -> dict:
         "risk_level": level,
         "reasons": {
             "industry_risk": industry_risk,
-            "keywords": keyword_hits
+            "keywords": keyword_hits,
+            "external_data_used": external_description[:120] + "..."  # skrót
         }
     }

@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 from .models import ClientInfo
 from .risk_logic import score_client
 

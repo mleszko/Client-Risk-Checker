@@ -1,0 +1,5 @@
+{
+  "$schema": "https://www.cursor.com/schemas/environment.schema.json",
+  "install": "bash .cursor/install.sh",
+  "start": "export PATH=\"$HOME/.local/bin:$PATH\""
+}

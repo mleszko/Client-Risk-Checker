@@ -1,4 +1,4 @@
-from app.risk_logic import check_industry_risk, check_text_risk
+from app.domain.services.risk_rules import check_industry_risk, check_text_risk
 
 
 def test_industry():

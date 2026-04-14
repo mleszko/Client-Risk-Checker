@@ -1,16 +1,12 @@
 from app.application.services.risk_assessment import RiskAssessmentService
-from app.domain.entities import ClientProfile, RiskAssessmentResult
-from app.domain.services.risk_rules import (
-    RuleBasedRiskEvaluator,
-)
+from app.domain.services.risk_rules import RuleBasedRiskEvaluator
 from app.domain.services.scoring_strategy import RuleBasedRiskScoringStrategy
 from app.infrastructure.company_data import OpenCorporatesCompanyDataProvider
 
 
-def score_client(info: ClientProfile) -> RiskAssessmentResult:
+def get_risk_assessment_service() -> RiskAssessmentService:
     evaluator = RuleBasedRiskEvaluator(scoring_strategy=RuleBasedRiskScoringStrategy())
-    service = RiskAssessmentService(
+    return RiskAssessmentService(
         company_data_provider=OpenCorporatesCompanyDataProvider(),
         evaluator=evaluator,
     )
-    return service.assess(info)

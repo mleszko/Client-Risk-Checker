@@ -61,10 +61,15 @@ The test suite enforces a minimum coverage threshold of **85%**.
 
 ```text
 app/
-  main.py                # FastAPI application and routes
-  models.py              # API request models
-  risk_logic.py          # Core risk scoring logic
-  data_sources.py        # External/CSV data adapters
+  main.py                         # FastAPI app bootstrap
+  api/routes/risk.py              # HTTP route layer
+  api/dependencies.py             # Dependency injection wiring
+  application/services/           # Use-case orchestration
+  domain/services/                # Pure domain rules/strategies
+  infrastructure/company_data.py  # External data adapters
+  models.py                       # Legacy API model (compat)
+  risk_logic.py                   # Legacy compatibility wrapper
+  data_sources.py                 # Legacy compatibility wrapper
   tests/                 # Unit and API tests
 ```
 
@@ -78,8 +83,12 @@ GitHub Actions runs:
 
 on both push and pull requests.
 
-## Next Architecture Steps
+## Architecture Notes
 
-- Introduce clean architecture layers (`api`, `application`, `domain`, `infrastructure`)
-- Add dependency injection boundaries for external providers
-- Expand model-serving and observability workflows
+- This service now uses a clean layered architecture:
+  - **API layer** (`app/api`): request/response boundary
+  - **Application layer** (`app/application`): orchestration use-case
+  - **Domain layer** (`app/domain`): pure risk rules + scoring strategy
+  - **Infrastructure layer** (`app/infrastructure`): OpenCorporates adapter
+- The `/check_risk` contract is preserved while internals are now DI-driven and
+  easier to test, replace, and evolve.

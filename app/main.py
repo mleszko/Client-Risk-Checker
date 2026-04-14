@@ -1,10 +1,6 @@
 from fastapi import FastAPI
 
-from .models import ClientInfo
-from .risk_logic import score_client
+from app.api.routes.risk import router as risk_router
 
-app = FastAPI()
-
-@app.post("/check_risk")
-def check_risk(client: ClientInfo):
-    return score_client(client)
+app = FastAPI(title="AI Risk Assessment Microservice")
+app.include_router(risk_router)

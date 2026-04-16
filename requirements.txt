@@ -1,5 +1,7 @@
-uvicorn
 fastapi
-pydantic
 httpx
+joblib
 pandas
+pydantic
+scikit-learn
+uvicorn
